@@ -6,10 +6,10 @@ module Api
       def index
         employees = Employee.all
 
-        employees = employees.where("full_name ILIKE ?", "%#{params[:search]}%") if params[:search].present?
-        employees = employees.where(country: params[:country])                    if params[:country].present?
-        employees = employees.where(department: params[:department])              if params[:department].present?
-        employees = employees.where(employment_status: params[:status])           if params[:status].present?
+        employees = employees.where("full_name ILIKE ?", "%#{params[:search]}%")          if params[:search].present?
+        employees = employees.where("country ILIKE ?", params[:country])               if params[:country].present?
+        employees = employees.where("department ILIKE ?", params[:department])         if params[:department].present?
+        employees = employees.where("employment_status ILIKE ?", params[:status])      if params[:status].present?
 
         total = employees.count
         employees = employees.order(order_clause).page(params[:page]).per(params[:per_page] || 25)
